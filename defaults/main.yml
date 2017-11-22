@@ -1,0 +1,4 @@
+---
+install_path: '/opt/locust.io'
+master_port: 5557
+state: 'started'
