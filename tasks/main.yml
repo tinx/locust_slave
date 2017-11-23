@@ -8,6 +8,15 @@
     - meta: end_play
   when: state == 'absent'
 
+# For state=stopped:
+- block:
+    - name: Stop locust.io
+      command: pkill locust
+      register: procs_killed
+      changed_when: procs_killed.rc == 0
+    - meta: end_play
+  when: state == 'stopped'
+
 # For all other states, make sure Locust.io is installed
 - name: Add ZeroMQ repository
   yum_repository:
