@@ -1,2 +1,49 @@
 ---
-# tasks file for tinx.locust_slave
+# For state=absent:
+- block:
+    - name: Remove locust.io installation
+      file:
+        path: '{{ install_path }}/locust.io'
+        state: absent
+    - meta: end_play
+  when: state == 'absent'
+
+# For all other states, make sure Locust.io is installed
+- name: Add ZeroMQ repository
+  yum_repository:
+    baseurl: 'https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-draft/CentOS_7/'
+    gpgkey: 'http://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-draft/CentOS_7/repodata/repomd.xml.key'
+    enabled: true
+    name: 'ZeroMQ'
+    description: 'Upstream repository for ZeroMQ message queue'
+    state: present
+- name: Update repo caches
+  yum:
+    name: python-virtualenv
+    update_cache: true
+- name: Install required packages
+  yum:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - zeromq-devel
+    - gcc
+- name: Check installation directory
+  file:
+    path: '{{ install_path }}/locust.io'
+    state: directory
+    mode: 0700
+- name: Install python requirements
+  pip:
+    name: 'locustio'
+    virtualenv: '{{ install_path }}/locust.io/virtenv'
+
+- name: Locust.IO installation done.
+  meta: end_play
+  when: state == 'present'
+
+# Better error message for missing parameter
+# - name: Verify master_host parameter
+#   fail:
+#     msg: "The master_host parameter is required for the locust.io role."
+#   when: master_host is not defined
