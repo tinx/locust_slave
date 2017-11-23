@@ -10,11 +10,11 @@ none
 
 | Variable                             | Default  | Comments (type)                                   |
 | :---           | :---             | :---                                              |
-| `install_path` | `/opt/locust.io` | Where the Locust.io files should exist.   |
-| `master_host`  |                  | IP, hostname or FQDN of the Locust.io master     |
-| `master_port`  | 5557             | TCP portnumber of the Locust.io master           |
-| `locustfile`   |                  | The Locust.io scenario file to play              |
-| `state`        | `started`        | State of Locust.io on the host.                  |
+| `install_path` | `/opt`    | Where the Locust.io files should exist.      |
+| `master_host`  |           | IP, hostname or FQDN of the Locust.io master |
+| `master_port`  | 5557      | TCP portnumber of the Locust.io master       |
+| `locustfile`   |           | The Locust.io scenario file to play          |
+| `state`        | `started` | State of Locust.io on the host.              |
 
 The `state` parameter can be one of:
 
@@ -23,6 +23,10 @@ The `state` parameter can be one of:
 * `restarted` - Locust.io should be freshly restarted
 * `stopped` - Locust.io should be stopped
 * `absent` - Locust.io should not be installed
+
+A directory named `locust.io` will be created at the `install_path`. If
+`state` is set to `absent`, this directory will be removed from the
+`install_path`.
 
 ## Dependencies
 
@@ -38,7 +42,7 @@ in `/usr/local/locust.io`, you could do this:
       - include_role:
            name: tinx.locust_slave
         vars:
-           install_path: '/usr/local/locust.io'
+           install_path: '/usr/local'
            master_host: 'locust_master.example.com'
            locustfile: '/home/locust/stress-test-prod.py'
 
