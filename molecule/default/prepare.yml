@@ -2,4 +2,8 @@
 - name: Prepare
   hosts: all
   gather_facts: False
-  tasks: []
+  tasks:
+    - name: Copy locustfile
+      copy:
+        src: locustfile
+        dest: /tmp/l.py

@@ -2,4 +2,4 @@
 - name: Converge
   hosts: all
   roles:
-    - role: tinx.locust_slave
+    - { role: tinx.locust_slave, master_host: master, locustfile: /tmp/l.py }
