@@ -68,9 +68,9 @@
   failed_when: pgrep_out.rc > 1
 - name: Start locust.io
   command: |
-    nohup {{ install_path }}/locust.io/virtenv/bin/locust
+    bash -c 'nohup {{ install_path }}/locust.io/virtenv/bin/locust
     --slave
     --master-host={{ master_host }}
     --master-port={{ master_port }}
-    -f {{ locustfile }} &
+    -f {{ locustfile }} &'
   when: pgrep_out.rc == 1
