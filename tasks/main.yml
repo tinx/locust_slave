@@ -11,9 +11,10 @@
 # For state=stopped:
 - block:
     - name: Stop locust.io
-      command: pkill locust
+      command: pkill -f '{{ install_path }}/locust.io/virtenv/bin/locust'
       register: procs_killed
       changed_when: procs_killed.rc == 0
+      failed_when: procs_killed.rc > 1
     - meta: end_play
   when: state == 'stopped'
 
@@ -33,7 +34,7 @@
 - name: Install required packages
   yum:
     name: '{{ item }}'
-    state: latest
+    state: present
   with_items:
     - zeromq-devel
     - gcc
@@ -47,12 +48,29 @@
     name: 'locustio'
     virtualenv: '{{ install_path }}/locust.io/virtenv'
 
+# For state=present:
 - name: Locust.IO installation done.
   meta: end_play
   when: state == 'present'
 
-# Better error message for missing parameter
-# - name: Verify master_host parameter
-#   fail:
-#     msg: "The master_host parameter is required for the locust.io role."
-#   when: master_host is not defined
+# For state=restarted:
+- name: Stop locust.io
+  command: pkill locust
+  changed_when: procs_killed.rc == 0
+  failed_when: procs_killed.rc > 1
+  when: state == 'restarted'
+
+# For state=started and state=restarted:
+- name: Look for running locust.io processes
+  command: pgrep -f '{{ install_path }}/locust.io/virtenv/bin/locust'
+  register: pgrep_out
+  changed_when: false
+  failed_when: pgrep_out.rc > 1
+- name: Start locust.io
+  command: |
+    nohup {{ install_path }}/locust.io/virtenv/bin/locust
+    --slave
+    --master-host={{ master_host }}
+    --master-port={{ master_port }}
+    -f {{ locustfile }} &
+  when: pgrep_out.rc == 1
