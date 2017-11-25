@@ -1,0 +1,28 @@
+[Unit]
+Description=Locust.io {{ instance_name }} slave
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Restart=on-failure
+User=root
+Group=root
+PermissionsStartOnly=true
+{% set options = "--slave" %}
+{% set options = options + " --master-host=" + master_host %}
+{% set options = options + " --master-port=" + master_port|string %}
+{% set options = options + " --locustfile=" + locustfile %}
+{% if cvs is defined %}
+{% set options = options + " --cvs=" + cvs %}
+{% endif %}
+{% if loglevel is defined %}
+{% set options = options + " --loglevel=" + loglevel %}
+{% endif %}
+{% if logfile is defined %}
+{% set options = options + " --logfile=" + logfile %}
+{% endif %}
+ExecStart=/opt/locust.io/{{ instance_name }}/virtenv/bin/locust {{ options }}
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target

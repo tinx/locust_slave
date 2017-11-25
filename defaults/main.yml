@@ -1,4 +1,4 @@
 ---
-install_path: '/opt'
+instance_name: 'default'
 master_port: 5557
 state: 'started'
