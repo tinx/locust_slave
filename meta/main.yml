@@ -11,6 +11,7 @@ galaxy_info:
 
   galaxy_tags:
     - Locust.IO
+    - locust
     - distributed
     - load
     - testing
