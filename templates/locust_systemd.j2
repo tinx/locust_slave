@@ -21,7 +21,7 @@ PermissionsStartOnly=true
 {% if logfile is defined %}
 {% set options = options + " --logfile=" + logfile %}
 {% endif %}
-ExecStart=/opt/locust.io/{{ instance_name }}/virtenv/bin/locust {{ options }}
+ExecStart=/opt/locust.io/base/virtenv/bin/locust {{ options }}
 KillSignal=SIGTERM
 
 [Install]
