@@ -17,6 +17,7 @@ inside a virtualenv.
 | Variable                             | Default  | Comments (type)                                   |
 | :---            | :---             | :---                                              |
 | `instance_name` | `default` | Name to distiguish between instances.        |
+| `instance_data` |           | Path to data to be copied into instance dir  |
 | `master_host`   |           | IP, hostname or FQDN of the Locust.io master |
 | `master_port`   | 5557      | TCP portnumber of the Locust.io master       |
 | `locustfile`    |           | The Locust.io scenario file to play          |
@@ -34,14 +35,21 @@ A directory named `/opt/locust.io` will be created. Inside of it, a
 subdirectory per instance will be created. If `state` is set to `absent`,
 this directory will be removed.
 
+The 'instance_data' parameter can point to a file or directory to
+be copied into the instance subdirectory. For example, `instance_data: data/`
+would copy the `data/` directory inside your playbook's `files/` directory
+to the instance subfolder.
+
+You can specify the `locustfile` parameter as a path relative to the
+`instance_data` content root. (see example below)
+
 ## Dependencies
 
 None
 
 ## Example Playbook
 
-To have a running Locust.io slave, installed in it's own VirtualEnv,
-you could do this:
+To have a running Locust.io slave you could do this:
 
     - hosts: locust_slaves
       tasks:
@@ -49,7 +57,8 @@ you could do this:
            name: tinx.locust_slave
         vars:
            master_host: 'locust_master.example.com'
-           locustfile: '/home/locust/stress-test-prod.py'
+           instance_data: data/
+           locustfile: 'stress-test-prod.py'
 
 ## Testing
 
