@@ -4,7 +4,13 @@ Manages locust.io slaves.
 
 ## Requirements
 
-none
+Locust.io requires ZeroMQ. This role will therefor install
+zeromq-devel and gcc system-wide to compile the necessary python
+pips for Locust.io. The upstream ZeroMQ yum repository will be
+registered and enabled to do this.
+
+All python related software requirements will be auto-installed
+inside a virtualenv.
 
 ## Role Variables
 
