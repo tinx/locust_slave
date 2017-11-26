@@ -15,7 +15,7 @@
       vars:
         instance_name: locust-2
         state: stopped
-    - name: Install instance 'default'
+    - name: Install instance 'slave'
       include_role:
         name: tinx.locust_slave
       vars:

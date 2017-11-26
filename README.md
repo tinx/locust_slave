@@ -14,9 +14,9 @@ inside a virtualenv.
 
 ## Role Variables
 
-| Variable        | Default  | Comments (type)                               |
-| :---            | :---     | :---                                          |
-| `instance_name` | `default` | Name to distiguish between instances.        |
+| Variable        | Default   | Comments (type)                              |
+| :---            | :---      | :---                                         |
+| `instance_name` | `slave`   | Name to distiguish between instances.        |
 | `instance_data` |           | Path to data to be copied into instance dir  |
 | `master_host`   |           | IP, hostname or FQDN of the Locust.io master |
 | `master_port`   | 5557      | TCP portnumber of the Locust.io master       |

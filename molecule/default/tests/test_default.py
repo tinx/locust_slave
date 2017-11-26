@@ -21,8 +21,8 @@ def test_correct_directory(host):
        by checking whether their instance directories and systemd
        unit filed exists or do not exist."""
     with host.sudo():
-        assert host.file("/opt/locust.io/default").is_directory
-        assert host.file("/etc/systemd/system/locust-default.service").exists
+        assert host.file("/opt/locust.io/slave").is_directory
+        assert host.file("/etc/systemd/system/locust-slave.service").exists
         assert not host.file("/opt/locust.io/locust-1").exists
         assert not host.file(
           "/etc/systemd/system/locust-locust-1.service").exists
@@ -38,13 +38,13 @@ def test_correct_directory(host):
 
 def test_instances_running(host):
     """This tests that only the expected three instances are running,
-       (default locust-3 and locust-5) and that they are running
+       (slave, locust-3 and locust-5) and that they are running
        using the base virtualenv."""
     pythons = host.process.filter(user="root")
     locusts = [proc for proc in pythons if 'locust.io' in proc.args]
     assert len(locusts) == 3
     assert len(list(filter(
-      lambda x: '/opt/locust.io/default/locustfile.py' in x.args, locusts
+      lambda x: '/opt/locust.io/slave/locustfile.py' in x.args, locusts
       ))) == 1
     assert len(list(filter(
       lambda x: '/opt/locust.io/locust-3/locustfile.py' in x.args, locusts
@@ -60,7 +60,7 @@ def test_instances_running(host):
 def test_services_running(host):
     """This tests whether the correct set of services is running from
        a systemd point of view."""
-    assert host.service("locust-default").is_running
+    assert host.service("locust-slave").is_running
     # service "locust-locust-1" does not exist since the
     # instance locust-1 has been de-installed with "state=absent"
     assert not host.service("locust-locust-2").is_running
