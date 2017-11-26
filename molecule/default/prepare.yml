@@ -4,7 +4,53 @@
   become: True
   gather_facts: False
   tasks:
-    - name: Copy locustfile
-      copy:
-        src: locustfile
-        dest: /tmp/l.py
+    - name: Install python for Ansible
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      changed_when: False
+    - name: Install locust.io instance locust-1
+      include_role:
+        name: tinx.locust_slave
+      vars:
+        instance_name: locust-1
+        instance_data: data/
+        master_host: master
+        locustfile: locustfile.py
+        state: present
+    - name: Install locust.io instance locust-2
+      include_role:
+        name: tinx.locust_slave
+      vars:
+        instance_name: locust-2
+        instance_data: data/
+        master_host: master
+        locustfile: locustfile.py
+    - name: Install locust.io instance locust-3
+      include_role:
+        name: tinx.locust_slave
+      vars:
+        instance_name: locust-3
+        instance_data: data/
+        master_host: master
+        master_port: 5001
+        locustfile: locustfile.py
+        csv: csvreport
+        loglevel: 'ERROR'
+        logfile: locust-3.log
+    - name: Install locust.io instance locust-4
+      include_role:
+        name: tinx.locust_slave
+      vars:
+        instance_name: locust-4
+        instance_data: data/
+        master_host: master
+        locustfile: locustfile.py
+        state: present
+    - name: Install locust.io instance locust-5
+      include_role:
+        name: tinx.locust_slave
+      vars:
+        instance_name: locust-5
+        instance_data: data/
+        master_host: master
+        locustfile: /opt/locust.io/locust-5/./locustfile.py
+        state: present

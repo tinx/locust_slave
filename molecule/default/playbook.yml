@@ -1,5 +1,32 @@
 ---
 - name: Converge
   hosts: all
-  roles:
-    - { role: tinx.locust_slave, master_host: master, locustfile: /tmp/l.py }
+  become: true
+  tasks:
+    - name: De-install instance locust-1
+      include_role:
+        name: tinx.locust_slave
+      vars:
+        instance_name: locust-1
+        state: absent
+    - name: Stop instance locust-2
+      include_role:
+        name: tinx.locust_slave
+      vars:
+        instance_name: locust-2
+        state: stopped
+    - name: Install instance 'default'
+      include_role:
+        name: tinx.locust_slave
+      vars:
+        master_host: master
+        instance_data: data/
+        locustfile: locustfile.py
+    - name: Start instance locust-5
+      include_role:
+        name: tinx.locust_slave
+      vars:
+        master_host: master
+        locustfile: locustfile.py
+        instance_name: locust-5
+        state: started
