@@ -16,8 +16,8 @@ PermissionsStartOnly=true
 {% else %}
 {% set options = options + " --locustfile=/opt/locust.io/" + instance_name + "/" + locustfile %}
 {% endif %}
-{% if cvs is defined %}
-{% set options = options + " --cvs=" + cvs %}
+{% if csv is defined %}
+{% set options = options + " --csv=" + csv %}
 {% endif %}
 {% if loglevel is defined %}
 {% set options = options + " --loglevel=" + loglevel %}
