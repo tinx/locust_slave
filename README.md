@@ -22,6 +22,9 @@ inside a virtualenv.
 | `master_port`   | 5557      | TCP portnumber of the Locust.io master       |
 | `locustfile`    |           | The Locust.io scenario file to play          |
 | `state`         | `started` | State of Locust.io on the host.              |
+| `csv`           |           | Base name of CVS report files                |
+| `logfile`       |           | Filename of the Locust.io logfile            |
+| `loglevel`      |           | Locust.io log level                          |
 
 The `state` parameter can be one of:
 
@@ -42,6 +45,10 @@ to the instance subfolder.
 
 You can specify the `locustfile` parameter as a path relative to the
 `instance_data` content root. (see example below)
+
+## Operating Systems
+
+This role was developed and tested for CentOS 7.4.
 
 ## Dependencies
 
