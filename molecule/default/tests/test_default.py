@@ -50,7 +50,7 @@ def test_instances_running(host):
       lambda x: '/opt/locust.io/locust-3/locustfile.py' in x.args, locusts
       ))) == 1
     assert len(list(filter(
-      lambda x: '/opt/locust.io/locust-5/locustfile.py' in x.args, locusts
+      lambda x: '/opt/locust.io/locust-5/./locustfile.py' in x.args, locusts
       ))) == 1
     assert len(list(filter(
       lambda x: '/opt/locust.io/base/virtenv/bin/python' in x.args, locusts
@@ -95,4 +95,4 @@ def locust_5_uses_absolute_path_locustfile(host):
        as a parameter, instead of the relative path as with the other."""
     unit = host.file(
       '/etc/systemd/system/locust-locust-5.service').content_string
-    assert "--locustfile=/opt/locust.io/locust-5/locustfile.py" in unit
+    assert "--locustfile=/opt/locust.io/locust-5/./locustfile.py" in unit

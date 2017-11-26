@@ -26,7 +26,8 @@
       include_role:
         name: tinx.locust_slave
       vars:
-        master_host: master
-        locustfile: locustfile.py
         instance_name: locust-5
+        instance_data: data/
+        master_host: master
+        locustfile: /opt/locust.io/locust-5/./locustfile.py
         state: started
