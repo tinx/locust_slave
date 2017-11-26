@@ -38,7 +38,7 @@ A directory named `/opt/locust.io` will be created. Inside of it, a
 subdirectory per instance will be created. If `state` is set to `absent`,
 this directory will be removed.
 
-The 'instance_data' parameter can point to a file or directory to
+The `instance_data` parameter can point to a file or directory to
 be copied into the instance subdirectory. For example, `instance_data: data/`
 would copy the `data/` directory inside your playbook's `files/` directory
 to the instance subfolder.
