@@ -2,3 +2,4 @@
 instance_name: 'slave'
 master_port: 5557
 state: 'started'
+enabled: false

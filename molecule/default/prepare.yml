@@ -36,6 +36,7 @@
         csv: csvreport
         loglevel: 'ERROR'
         logfile: locust-3.log
+        enabled: true
     - name: Install locust.io instance locust-4
       include_role:
         name: tinx.locust_slave

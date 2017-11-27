@@ -22,6 +22,7 @@ inside a virtualenv.
 | `master_port`   | 5557      | TCP port number of the Locust.io master      |
 | `locustfile`    |           | The Locust.io scenario file to play          |
 | `state`         | `started` | State of Locust.io on the host.              |
+| `enabled`       | `false`   | If true, start this instance after reboots   |
 | `csv`           |           | Base name of CVS report files                |
 | `logfile`       |           | Filename of the Locust.io logfile            |
 | `loglevel`      |           | Locust.io log level                          |
