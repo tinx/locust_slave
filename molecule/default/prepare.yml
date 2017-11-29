@@ -35,8 +35,10 @@
         locustfile: locustfile.py
         csv: csvreport
         loglevel: 'ERROR'
-        logfile: locust-3.log
+        logfile: /tmp/locust-3.log
         enabled: true
+        run_as_user: daemon
+        run_as_group: daemon
     - name: Install locust.io instance locust-4
       include_role:
         name: tinx.locust_slave

@@ -26,6 +26,8 @@ inside a virtualenv.
 | `csv`           |           | Base name of CVS report files                |
 | `logfile`       |           | Filename of the Locust.io logfile            |
 | `loglevel`      |           | Locust.io log level                          |
+| `run_as_user`   |           | Which unix user to launch Locust.io as       |
+| `run_as_group`  |           | Which unix group to launch Locust.io under   |
 
 The `state` parameter can be one of:
 
