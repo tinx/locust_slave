@@ -14,7 +14,10 @@
         name: tinx.locust_slave
       vars:
         instance_name: locust-2
-        state: stopped
+        instance_data: data/
+        master_host: master
+        locustfile: locustfile.py
+        state: present
     - name: Install instance 'slave'
       include_role:
         name: tinx.locust_slave
