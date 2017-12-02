@@ -1,0 +1,59 @@
+---
+- name: Look for existing config file
+  stat:
+    path: '/opt/locust.io/{{ instance_name }}/start_script'
+  register: st
+- name: Render basic start script
+  template:
+    src: locust_startscript.j2
+    dest: '/opt/locust.io/{{ instance_name }}/start_script'
+    mode: 0755
+    owner: '{{ run_as_user|default(omit) }}'
+    group: '{{ run_as_group|default(omit) }}'
+  when: not st.stat.exists
+
+# Boolean values
+- name: Store boolean option
+  lineinfile:
+    path: '/opt/locust.io/{{ instance_name }}/start_script'
+    create: true
+    state: present
+    line: "--{{ item.name }} \\"
+    insertafter: EOF
+  when: item.value != '__undef' and item.value
+  notify:
+    - restart locust instance
+  with_items:
+    - { name: "slave", value: "{{slave|default('__undef')}}" }
+- name: Store boolean option
+  lineinfile:
+    path: '/opt/locust.io/{{ instance_name }}/start_script'
+    create: true
+    state: absent
+    line: "--{{ item.name }} \\"
+    insertafter: EOF
+  when: item.value != '__undef' and not item.value
+  notify:
+    - restart locust instance
+  with_items:
+    - { name: "slave", value: "{{slave|default('__undef')}}" }
+
+# String values
+- name: Store string option
+  lineinfile:
+    path: '/opt/locust.io/{{ instance_name }}/start_script'
+    create: true
+    state: present
+    regexp: '^--{{ item.name }}='
+    line: "--{{ item.name }}={{ item.value }} \\"
+    insertafter: EOF
+  when: item.value != '__undef'
+  notify:
+    - restart locust instance
+  with_items:
+    - { name: "master-host", value: "{{master_host|default('__undef')}}" }
+    - { name: "master-port", value: "{{master_port|string|default('__undef')}}" }
+    - { name: "locustfile", value: "{{locustfile|default('__undef')}}" }
+    - { name: "csv", value: "{{csv|default('__undef')}}" }
+    - { name: "loglevel", value: "{{loglevel|default('__undef')}}" }
+    - { name: "logfile", value: "{{logfile|default('__undef')}}" }

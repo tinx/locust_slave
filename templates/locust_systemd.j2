@@ -16,24 +16,7 @@ Group={{ run_as_group }}
 Group=root
 {% endif %}
 PermissionsStartOnly=true
-{% set options = "--slave" %}
-{% set options = options + " --master-host=" + master_host %}
-{% set options = options + " --master-port=" + master_port|string %}
-{% if locustfile|list|first == '/' %}
-{% set options = options + " --locustfile=" + locustfile %}
-{% else %}
-{% set options = options + " --locustfile=/opt/locust.io/" + instance_name + "/" + locustfile %}
-{% endif %}
-{% if csv is defined %}
-{% set options = options + " --csv=" + csv %}
-{% endif %}
-{% if loglevel is defined %}
-{% set options = options + " --loglevel=" + loglevel %}
-{% endif %}
-{% if logfile is defined %}
-{% set options = options + " --logfile=" + logfile %}
-{% endif %}
-ExecStart=/opt/locust.io/base/virtenv/bin/locust {{ options }}
+ExecStart=/opt/locust.io/{{ instance_name }}/start_script
 KillSignal=SIGTERM
 
 [Install]
