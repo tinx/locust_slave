@@ -95,6 +95,7 @@ def test_locust_3_optional_parameters(host):
     assert "--csv=" in unit
     assert "--loglevel=" in unit
     assert "--logfile=" in unit
+    assert "MyLocust" in unit
 
 
 def test_locust_3_is_enabled(host):

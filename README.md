@@ -18,6 +18,7 @@ inside a virtualenv.
 | :---            | :---      | :---                                         |
 | `instance_name` | `slave`   | Name to distiguish between instances.        |
 | `instance_data` |           | Path to data to be copied into instance dir  |
+| `locust_classes`| `[]`      | List of client classes to run                |
 | `master_host`   |           | IP, hostname or FQDN of the Locust.io master |
 | `master_port`   | 5557      | TCP port number of the Locust.io master      |
 | `locustfile`    |           | The Locust.io scenario file to play          |

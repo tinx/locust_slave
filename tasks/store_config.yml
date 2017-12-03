@@ -19,7 +19,7 @@
     create: true
     state: present
     line: "--{{ item.name }} \\"
-    insertafter: EOF
+    insertbefore: '^\$LOCUSTCLASSES'
   when: item.value != '__undef' and item.value
   notify:
     - restart locust instance
@@ -31,7 +31,7 @@
     create: true
     state: absent
     line: "--{{ item.name }} \\"
-    insertafter: EOF
+    insertbefore: '^\$LOCUSTCLASSES'
   when: item.value != '__undef' and not item.value
   notify:
     - restart locust instance
@@ -46,7 +46,7 @@
     state: present
     regexp: '^--{{ item.name }}='
     line: "--{{ item.name }}={{ item.value }} \\"
-    insertafter: EOF
+    insertbefore: '^\$LOCUSTCLASSES'
   when: item.value != '__undef'
   notify:
     - restart locust instance

@@ -31,6 +31,8 @@
       vars:
         instance_name: locust-3
         instance_data: data/
+        locust_classes:
+          - 'MyLocust'
         master_host: master
         master_port: 5001
         locustfile: locustfile.py
