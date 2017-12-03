@@ -18,6 +18,14 @@
         master_host: master
         locustfile: locustfile.py
         state: stopped
+    - name: Alter instance locust-3
+      include_role:
+        name: tinx.locust_slave
+      vars:
+        instance_name: locust-3
+        locust_classes:
+          - 'MyLocust'
+          - 'MyOtherLocust'
     - name: Install instance 'slave'
       include_role:
         name: tinx.locust_slave

@@ -52,8 +52,18 @@
     - restart locust instance
   with_items:
     - { name: "master-host", value: "{{master_host|default('__undef')}}" }
-    - { name: "master-port", value: "{{master_port|string|default('__undef')}}" }
+    - { name: "master-port", value: "{{master_port|default('__undef')|string}}" }
     - { name: "locustfile", value: "{{locustfile|default('__undef')}}" }
     - { name: "csv", value: "{{csv|default('__undef')}}" }
     - { name: "loglevel", value: "{{loglevel|default('__undef')}}" }
     - { name: "logfile", value: "{{logfile|default('__undef')}}" }
+
+- name: Storing locust classes
+  lineinfile:
+    path: '/opt/locust.io/{{ instance_name }}/start_script'
+    create: true
+    state: present
+    regexp: '^LOCUSTCLASSES='
+    line: "LOCUSTCLASSES='{{locust_classes|default([])|join(\" \")}}'"
+  notify:
+    - restart locust instance
